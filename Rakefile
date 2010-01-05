@@ -6,7 +6,7 @@ task :default => :package
 
 spec = Gem::Specification.new do |s|
   s.name              = "rack-webtranslateit"
-  s.version           = "0.1.0"
+  s.version           = "0.1.1"
   s.summary           = "Provide a web interface for updating your WebTranslateIt.com translations."
   s.author            = "Tom Lea"
   s.email             = "contrib@tomlea.co.uk"
