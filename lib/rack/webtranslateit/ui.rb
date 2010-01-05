@@ -1,59 +1,51 @@
-require 'erb'
-require 'ostruct'
+require 'sinatra/base'
 
-class Rack::Webtranslateit::Ui < Rack::Webtranslateit::BaseController
+class Rack::Webtranslateit::Ui < Sinatra::Base
+  set :views => File.join(File.dirname(__FILE__), *%w[.. .. .. templates])
 
-  def initialize(default_app)
-    handle = method(:handle)
-    @app = Rack::Builder.app do
-      use Rack::CommonLogger
-      use Rack::ShowExceptions
-      map "/translations" do
-        use Rack::Lint
+  use Rack::ShowExceptions
+  use Rack::Lint
+  use Rack::Static, :urls => ["/static"], :root => File.join(File.dirname(__FILE__), *%w[.. .. .. public])
 
-        map "/" do
-          run handle[:index]
-        end
-
-        map "/update" do
-          run handle[:update]
-        end
-
-        map "/static" do
-          use Rack::Static, :urls => ["/"], :root => STATIC_PATH
-          run handle[:not_found]
-        end
-
+  helpers do
+    def highlight_unless_equal(value, expected)
+      if value == expected
+        value
+      else
+        "<em>#{value}</em>"
       end
+    end
 
-      map "/" do
-        run default_app
-      end
+    def base_path
+      request.script_name
     end
   end
 
-  def index
-    render :index, :files => config.files, :locales => config.locales
+  get '/' do
+    content_type 'text/html', :charset => 'utf-8'
+    erb :index, :locals => {:files => config.files, :locales => config.locales}
   end
 
-  def update
+  post '/update' do
     fetch_translations
-    redirect_to "/"
+    redirect "/"
   end
 
 protected
+
+  def redirect(path, *args)
+    super(base_path + path, *args)
+  end
 
   def config
     @config ||= Rack::Webtranslateit::Configuration.new
   end
 
   def fetch_translations
-    puts "Looking for translations..."
     config.files.each do |file|
       config.locales.each do |locale|
         next if config.ignore_locales.include?(locale)
         response_code = file.for(locale).fetch!
-        puts "Done. Response code: #{response_code}"
       end
     end
   end

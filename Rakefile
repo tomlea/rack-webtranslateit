@@ -19,6 +19,7 @@ spec = Gem::Specification.new do |s|
   s.files             = %w(README.markdown) + Dir.glob("{lib,static,templates}/**/*")
 
   s.require_paths     = ["lib"]
+  s.add_dependency    "sinatra"
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|

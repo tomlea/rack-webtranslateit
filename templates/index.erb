@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>WebTranslateIt – Admin</title>
-    <link rel="stylesheet" href="/translations/static/main.css" type="text/css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="<%= base_path %>/static/main.css" type="text/css" media="screen" charset="utf-8">
   </head>
   <body>
     <div id="content">
@@ -40,7 +40,7 @@
           </table>
         <% end %>
 
-        <form method="post" action="/translations/update">
+        <form method="post" action="<%= base_path %>/update">
           <input type="submit" value="Update All Translations" />
         </form>
       </div>
