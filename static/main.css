@@ -1,0 +1,73 @@
+body {
+  font-family: 'Lucida Grande', Arial, Helvetica, Verdana, sans-serif;
+  background: url("stripe5.png");
+  color: #444;
+}
+
+h1{
+  background: #CFDBBA;
+  margin: 0 0 1em 0;
+  padding: .5em;
+  font-size: 1.6em;
+  border-bottom: 1px solid #8C9574;
+  text-shadow: #EEE 0px 1px 1px;
+}
+
+em {
+  background-color: rgb(255, 227, 0);
+  padding: 2px;
+}
+
+#content {
+  background: #fff;
+  border: 1px solid #8C9574;
+  width: 700px;
+  margin-left: -351px;
+  position: absolute;
+  left: 50%;
+  top: 5em;
+}
+
+#content > div {
+  margin: .5em;
+}
+
+table {
+  margin: 1em auto;
+  border-collapse: collapse;
+}
+table caption{
+  font-size: 1.3em;
+  font-weight: bold;
+  text-shadow: #EEE 0px 1px 1px;
+  margin: .3em;
+}
+table td, table th {
+  border: 1px solid #8C9574;
+  padding: .2em;
+  width: 50%;
+}
+
+form {
+  text-align: center;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(50,50,50,.5);
+  margin:0;
+}
+
+#footer p {
+  margin: 1em 3em;
+  font-size: 0.5em;
+  text-align: right;
+  color: #ccc;
+}
+
+#footer p a {
+  color: #fff;
+}
