@@ -7,20 +7,6 @@ class Rack::Webtranslateit::Ui < Sinatra::Base
   use Rack::Lint
   use Rack::Static, :urls => ["/static"], :root => File.join(File.dirname(__FILE__), *%w[.. .. .. public])
 
-  helpers do
-    def highlight_unless_equal(value, expected)
-      if value == expected
-        value
-      else
-        "<em>#{value}</em>"
-      end
-    end
-
-    def base_path
-      request.script_name
-    end
-  end
-
   get(''){redirect "/"}
 
   get '/' do
@@ -33,6 +19,16 @@ class Rack::Webtranslateit::Ui < Sinatra::Base
     redirect "/"
   end
 
+  helpers do
+    def highlight_unless_equal(value, expected)
+      value == expected ? value : "<em>#{value}</em>"
+    end
+
+    def base_path
+      request.script_name
+    end
+  end
+
 protected
 
   def redirect(path, *args)
@@ -40,7 +36,7 @@ protected
   end
 
   def config
-    @config ||= Rack::Webtranslateit::Configuration.new
+    @config ||= Rack::Webtranslateit::Configuration
   end
 
   def fetch_translations

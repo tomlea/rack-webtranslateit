@@ -1,13 +1,14 @@
 require 'yaml'
 
 class Rack::Webtranslateit::Configuration
-  attr_accessor :api_key, :autofetch, :files, :ignore_locales
+  attr_accessor :api_key, :autofetch, :files, :ignore_locales, :password
 
   def initialize
     file = File.join(RAILS_ROOT, 'config', 'translation.yml')
     configuration       = YAML.load_file(file)
     self.api_key        = configuration['api_key']
     self.autofetch      = configuration[RAILS_ENV]['autofetch']
+    self.password       = configuration['password']
     self.files          = []
     self.ignore_locales = [configuration['ignore_locales']].flatten.map{ |l| l.to_s }
     configuration['files'].each do |file_id, file_path|
@@ -27,5 +28,10 @@ class Rack::Webtranslateit::Configuration
     else
       []
     end
+  end
+
+  def self.method_missing(name, *args)
+    @configuration ||= new
+    @configuration.send(name, *args)
   end
 end
