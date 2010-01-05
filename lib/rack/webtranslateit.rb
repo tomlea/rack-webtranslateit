@@ -1,10 +1,10 @@
 require "rack"
 
 module Rack::Webtranslateit
-  def new(app)
+  def new(app, mount_point = "/translations/")
     builder = Rack::Builder.new
     builder.use Rack::Auth::Basic, &method(:authenticator) if Configuration.password
-    builder.map("/translations/"){ run Ui.new }
+    builder.map(mount_point){ run Ui.new }
     builder.map("/"){ run app }
     builder.to_app
   end
