@@ -21,6 +21,8 @@ class Rack::Webtranslateit::Ui < Sinatra::Base
     end
   end
 
+  get(''){redirect "/"}
+
   get '/' do
     content_type 'text/html', :charset => 'utf-8'
     erb :index, :locals => {:files => config.files, :locales => config.locales}
