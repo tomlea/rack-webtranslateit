@@ -7,7 +7,6 @@ class Rack::Webtranslateit::Configuration
     file = File.join(RAILS_ROOT, 'config', 'translation.yml')
     configuration       = YAML.load_file(file)
     self.api_key        = configuration['api_key']
-    self.autofetch      = configuration[RAILS_ENV]['autofetch']
     self.password       = configuration['password']
     self.files          = []
     self.ignore_locales = [configuration['ignore_locales']].flatten.map{ |l| l.to_s }
