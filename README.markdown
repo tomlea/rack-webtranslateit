@@ -26,7 +26,7 @@
 
 * Add the middleware:
 
-        config.gem 'rack-webtranslateit', :lib => false
+        config.gem 'rack-webtranslateit', :lib => 'rack/webtranslateit'
         config.middleware.use "Rack::Webtranslateit", "/translations/"
 
 * Go to http://yourapp/translations.
