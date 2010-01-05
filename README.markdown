@@ -1,4 +1,6 @@
-#Usage:
+![rack-webtranslateit](http://s3.amazonaws.com:80/edouard.baconfile.com/rack-webtranslateit.png)
+
+# Usage:
 
 * Sign up for a webtranslateit.com premium account.
 * Create a config/translation.yml file:
