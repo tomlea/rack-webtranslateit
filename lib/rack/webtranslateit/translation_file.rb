@@ -25,7 +25,7 @@ class Rack::Webtranslateit::TranslationFile
 
     def committed?
       Dir.chdir(File.dirname(file_path)) do
-        system "git status | grep 'modified:   #{File.basename(file_path)}'"
+        system "git status | grep 'modified:   #{File.basename(file_path)}' > /dev/null"
       end
       ! $?.success?
     end
