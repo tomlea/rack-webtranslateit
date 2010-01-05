@@ -1,15 +1,15 @@
 require 'yaml'
 
 class Rack::Webtranslateit::Configuration
-  attr_accessor :api_key, :autofetch, :files, :ignore_locales, :password
+  attr_accessor :api_key, :files, :master_locale, :password
 
   def initialize
     file = File.join(RAILS_ROOT, 'config', 'translation.yml')
     configuration       = YAML.load_file(file)
     self.api_key        = configuration['api_key']
     self.password       = configuration['password']
+    self.master_locale  = configuration['master_locale'].to_s
     self.files          = []
-    self.ignore_locales = [configuration['ignore_locales']].flatten.map{ |l| l.to_s }
     configuration['files'].each do |file_id, file_path|
       self.files.push(Rack::Webtranslateit::TranslationFile.new(file_id, file_path, api_key))
     end

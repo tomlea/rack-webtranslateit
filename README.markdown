@@ -11,7 +11,7 @@
         # The locales not to sync with Web Translate It.
         # Pass an array of string, or an array of symbols, a string or a symbol.
         # eg. [:en, :fr] or just 'en'
-        ignore_locales: :en
+        master_locale: :en
         
         # A list of files to translate
         # You can name your language files as you want, as long as the locale name match the
