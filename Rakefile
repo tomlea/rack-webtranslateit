@@ -16,7 +16,7 @@ spec = Gem::Specification.new do |s|
   s.extra_rdoc_files  = %w(README.markdown)
   s.rdoc_options      = %w(--main README.markdown)
 
-  s.files             = %w(README.markdown) + Dir.glob("{lib,static,templates}/**/*")
+  s.files             = %w(README.markdown) + Dir.glob("{lib,public,templates}/**/*")
 
   s.require_paths     = ["lib"]
   s.add_dependency    "sinatra"
