@@ -4,7 +4,10 @@ class Rack::Webtranslateit::Configuration
   attr_accessor :api_key, :files, :master_locale, :password
 
   def initialize
-    file = File.join(RAILS_ROOT, 'config', 'translation.yml')
+    root = defined?(RAILS_ROOT) && RAILS_ROOT
+    root ||= defined?(RACK_ROOT) && RACK_ROOT
+    root ||= File.expand_path(".")
+    file = File.join(root, 'config', 'translation.yml')
     configuration       = YAML.load_file(file)
     self.api_key        = configuration['api_key']
     self.password       = configuration['password']
