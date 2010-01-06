@@ -42,7 +42,7 @@ protected
   def fetch_translations
     config.files.each do |file|
       config.locales.each do |locale|
-        next if config.ignore_locales.include?(locale)
+        next if config.master_locale == locale
         response_code = file.for(locale).fetch!
       end
     end
