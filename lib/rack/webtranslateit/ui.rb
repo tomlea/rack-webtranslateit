@@ -4,7 +4,6 @@ class Rack::Webtranslateit::Ui < Sinatra::Base
   set :views => File.join(File.dirname(__FILE__), *%w[.. .. .. templates])
 
   use Rack::ShowExceptions
-  use Rack::Lint
   use Rack::Static, :urls => ["/static"], :root => File.join(File.dirname(__FILE__), *%w[.. .. .. public])
 
   get(''){redirect "/"}
