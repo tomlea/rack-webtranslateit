@@ -38,7 +38,7 @@ class Rack::Webtranslateit::TranslationFile
     end
 
     def modified_remotely?
-      get_translations.code.to_i == 200
+      get_translations.code.to_i == 200 unless master?
     end
 
     def get_translations(respect_modified_since = true)

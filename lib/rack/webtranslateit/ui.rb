@@ -26,6 +26,7 @@ class Rack::Webtranslateit::Ui < Sinatra::Base
 
   helpers do
     def highlight_unless_equal(value, expected)
+      return if value.nil?
       value == expected ? value : "<em>#{value}</em>"
     end
 
