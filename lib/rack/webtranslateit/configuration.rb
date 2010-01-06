@@ -4,10 +4,13 @@ class Rack::Webtranslateit::Configuration
   attr_accessor :api_key, :files, :master_locale, :password
 
   def initialize
-    root = defined?(RAILS_ROOT) && RAILS_ROOT
-    root ||= defined?(RACK_ROOT) && RACK_ROOT
-    root ||= File.expand_path(".")
-    file = File.join(root, 'config', 'translation.yml')
+    unless file = self.class.config_location
+      root = defined?(RAILS_ROOT) && RAILS_ROOT
+      root ||= defined?(RACK_ROOT) && RACK_ROOT
+      root ||= File.expand_path(".")
+      file = File.join(root, 'config', 'translation.yml')
+    end
+
     configuration       = YAML.load_file(file)
     self.api_key        = configuration['api_key']
     self.password       = configuration['password']
@@ -32,8 +35,12 @@ class Rack::Webtranslateit::Configuration
     end
   end
 
-  def self.method_missing(name, *args)
-    @configuration ||= new
-    @configuration.send(name, *args)
+  class << self
+    def method_missing(name, *args)
+      @configuration ||= new
+      @configuration.send(name, *args)
+    end
+
+    attr_accessor :config_location
   end
 end
