@@ -14,7 +14,7 @@ class Rack::Webtranslateit::Configuration
     self.master_locale  = configuration['master_locale'].to_s
     self.files          = []
     configuration['files'].each do |file_id, file_path|
-      self.files.push(Rack::Webtranslateit::TranslationFile.new(file_id, file_path, api_key))
+      self.files.push(Rack::Webtranslateit::TranslationFile.new(file_id, file_path, api_key, master_locale))
     end
   end
 

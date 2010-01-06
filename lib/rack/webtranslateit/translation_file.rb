@@ -1,12 +1,13 @@
 require 'net/https'
 require 'ftools'
 class Rack::Webtranslateit::TranslationFile
-  attr_accessor :id, :file_path, :api_key
+  attr_accessor :id, :file_path, :api_key, :master_locale
 
-  def initialize(id, file_path, api_key)
+  def initialize(id, file_path, api_key, master_locale)
     self.id        = id
     self.file_path = file_path
     self.api_key   = api_key
+    self.master_locale = master_locale
   end
 
   def for(locale)
@@ -28,6 +29,10 @@ class Rack::Webtranslateit::TranslationFile
         system "git status | grep 'modified:   #{File.basename(file_path)}' > /dev/null"
       end
       ! $?.success?
+    end
+
+    def master?
+      @file.master_locale == locale
     end
 
     def modified_remotely?
