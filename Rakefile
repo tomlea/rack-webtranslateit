@@ -1,8 +1,16 @@
 require "rubygems"
 require "rake/gempackagetask"
 require "rake/rdoctask"
+require "rake/testtask"
 
-task :default => :package
+task :default => [:test, :package]
+
+Rake::TestTask.new do |t|
+  t.libs << "test"
+  t.libs << "lib"
+  t.test_files = FileList['test/*_test.rb']
+  t.verbose = true
+end
 
 spec = Gem::Specification.new do |s|
   s.name              = "rack-webtranslateit"
@@ -19,7 +27,12 @@ spec = Gem::Specification.new do |s|
   s.files             = %w(README.markdown) + Dir.glob("{lib,public,templates}/**/*")
 
   s.require_paths     = ["lib"]
+  s.add_dependency    "rack"
   s.add_dependency    "sinatra"
+  s.add_dependency    "multipart-post", ">=1.0"
+
+  s.add_development_dependency "webmock"
+  s.add_development_dependency "shoulda"
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
