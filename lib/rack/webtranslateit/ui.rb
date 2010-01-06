@@ -19,6 +19,11 @@ class Rack::Webtranslateit::Ui < Sinatra::Base
     redirect "/"
   end
 
+  post '/upload' do
+    upload_master_file
+    redirect '/'
+  end
+
   helpers do
     def highlight_unless_equal(value, expected)
       value == expected ? value : "<em>#{value}</em>"
@@ -45,6 +50,12 @@ protected
         next if config.master_locale == locale
         response_code = file.for(locale).fetch!
       end
+    end
+  end
+
+  def upload_master_file
+    config.files.each do |file|
+      file.for(config.master_locale).upload
     end
   end
 

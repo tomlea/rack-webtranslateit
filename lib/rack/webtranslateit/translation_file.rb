@@ -1,5 +1,7 @@
 require 'net/https'
+require 'net/http/post/multipart'
 require 'ftools'
+
 class Rack::Webtranslateit::TranslationFile
   attr_accessor :id, :file_path, :api_key, :master_locale
 
@@ -43,26 +45,26 @@ class Rack::Webtranslateit::TranslationFile
       http_connection do |http|
         request           = Net::HTTP::Get.new(api_url)
         request.add_field('If-Modified-Since', File.mtime(File.new(file_path, 'r')).rfc2822) if File.exist?(file_path) and respect_modified_since
-        return http.request(request)
+        http.request(request)
       end
     end
 
     def fetch
       response = get_translations
-      File.open(file_path, 'w'){|f| f << response.body } if response.code.to_i == 200 and not response.body.blank?
+      File.open(file_path, 'w'){|f| f << response.body } if response.code.to_i == 200 and not response.body == ""
     end
 
     def fetch!
       response = get_translations(false)
-      File.open(file_path, 'w'){|f| f << response.body } if response.code.to_i == 200 and not response.body.blank?
+      File.open(file_path, 'w'){|f| f << response.body } if response.code.to_i == 200 and not response.body == ""
     end
 
-    def send
+    def upload
       File.open(file_path) do |file|
         http_connection do |http|
           request  = Net::HTTP::Put::Multipart.new(api_url, "file" => UploadIO.new(file, "text/plain", file.path))
           response = http.request(request)
-          return response.code.to_i
+          raise "Failed to Upload File, #{response.code} response recieved" unless response.code.to_i < 400
         end
       end
     end

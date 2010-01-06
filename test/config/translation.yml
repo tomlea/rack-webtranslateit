@@ -1,10 +1,10 @@
 # The Project API Token from Web Translate It
-api_key: api_key
+api_key: 5d0387f7bbacd2031c3208dfd79567981b69a861
 
 # The locales not to sync with Web Translate It.
 # Pass an array of string, or an array of symbols, a string or a symbol.
 # eg. [:en, :fr] or just 'en'
-master_locale: :en
+master_locale: :en_GB
 
 # A list of files to translate
 # You can name your language files as you want, as long as the locale name match the
@@ -14,7 +14,7 @@ master_locale: :en
 #
 # wti_id is the file id from Web Translate It.
 files:
-  1234: config/locales/[locale].yml
+  1430: config/locales/[locale].yml
 
 # Optional password to access the web interface
 password: password

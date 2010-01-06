@@ -43,6 +43,10 @@
         <form method="post" action="<%= base_path %>/update">
           <input type="submit" value="Update All Translations" />
         </form>
+
+        <form method="post" action="<%= base_path %>/upload">
+          <input type="submit" value="Upload Master File" onclick="javascript: return confirm('This will immediately make new required translations available on webtranslateit.com. Are you sure you with to continue?')" />
+        </form>
       </div>
     </div>
     <div id="footer">
