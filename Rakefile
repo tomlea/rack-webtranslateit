@@ -14,7 +14,7 @@ end
 
 spec = Gem::Specification.new do |s|
   s.name              = "rack-webtranslateit"
-  s.version           = "0.1.2"
+  s.version           = "0.1.3"
   s.summary           = "Provide a web interface for updating your WebTranslateIt.com translations."
   s.author            = "Tom Lea"
   s.email             = "contrib@tomlea.co.uk"
