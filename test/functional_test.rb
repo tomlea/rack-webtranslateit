@@ -3,13 +3,18 @@ require 'test/unit'
 require 'shoulda'
 require 'rack'
 require 'webmock/test_unit'
+require File.join(File.dirname(__FILE__), *%w[.. lib rack webtranslateit])
 
 WebMock.disable_net_connect!
-
-require File.join(File.dirname(__FILE__), *%w[.. lib rack webtranslateit])
+Dir.chdir File.join(File.dirname(__FILE__), *%w[..])
+Rack::Webtranslateit::Configuration.config_location = File.join(File.dirname(__FILE__), *%w[config translation.yml])
 
 class FunctionalTest < Test::Unit::TestCase
   include WebMock
+
+  def api_key
+    Rack::Webtranslateit::Configuration.api_key
+  end
 
   def app
     Rack::Builder.new do
@@ -40,11 +45,11 @@ class FunctionalTest < Test::Unit::TestCase
   end
 
   should "get a list of available locales from webtranslateit.com" do
-    stub_request(:get, "https://webtranslateit.com/api/projects/api_key/locales").to_return(:body => "fr")
-    stub_request(:get, "https://webtranslateit.com/api/projects/api_key/files/1234/locales/fr").to_return(:status => 304)
+    stub_request(:get, "https://webtranslateit.com/api/projects/#{api_key}/locales").to_return(:body => "fr")
+    stub_request(:get, "https://webtranslateit.com/api/projects/#{api_key}/files/1430/locales/fr").to_return(:status => 304)
     get "/translations/", 'HTTP_AUTHORIZATION' => encode_credentials('admin', 'password')
     assert_equal 200, last_response.status, last_response.errors
-    assert_requested :get, "https://webtranslateit.com/api/projects/api_key/locales"
+    assert_requested :get, "https://webtranslateit.com/api/projects/#{api_key}/locales"
   end
 
 private

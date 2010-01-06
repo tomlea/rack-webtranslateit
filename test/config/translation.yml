@@ -14,7 +14,7 @@ master_locale: :en_GB
 #
 # wti_id is the file id from Web Translate It.
 files:
-  1430: config/locales/[locale].yml
+  1430: test/config/locales/[locale].yml
 
 # Optional password to access the web interface
 password: password
